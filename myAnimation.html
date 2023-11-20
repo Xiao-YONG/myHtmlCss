@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <!-- <meta http-equiv="refresh" content="5"> -->
+    <title>我的动画</title>
+    <style type="text/css">
+        body {
+            padding: 0;
+            margin: 0;
+            background: #f7f7f7;
+            width: 100vw;
+        }
+
+        /* 交融动画关键帧 */
+        @keyframes jiaorong {
+            from {
+                letter-spacing: -20px;
+                filter: blur(10px);
+            }
+
+            to {
+                letter-spacing: 5px;
+                filter: blur(0px);
+            }
+        }
+
+        .test-dh-view {
+            text-align: center;
+            padding: 20px;
+            background: #000;
+            filter: contrast(20);
+        }
+
+        .test-dh {
+            font-size: 40px;
+            color: #FFFFFF;
+            font-weight: 600;
+            animation: jiaorong 2s infinite alternate;
+        }
+
+        /* 旋转动画关键帧 */
+        @keyframes rotate {
+            from {
+                transform: rotateZ(0deg);
+            }
+
+            to {
+                transform: rotateZ(360deg);
+            }
+        }
+
+        .cirle {
+            width: 100px;
+            height: 100px;
+            background: red;
+            border-radius: 40%;
+            animation: rotate 2s linear infinite;
+        }
+
+        /* 围着屏幕跑动画关键帧 */
+        @keyframes run {
+            0% {
+                top: 0;
+                left: 0;
+            }
+
+            25% {
+                top: 0;
+                left: calc(100% - 40px);
+            }
+
+            50% {
+                top: calc(100% - 40px);
+                left: calc(100% - 40px);
+            }
+
+            75% {
+                top: calc(100% - 40px);
+                left: 0;
+            }
+
+            100% {
+                top: 0;
+                left: 0;
+            }
+        }
+
+        .run-point {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: green;
+            position: absolute;
+            animation: run 10s linear infinite;
+        }
+
+        .close-rotate {
+            display: flex;
+            align-items: center;
+            justify-items: center;
+            font-size: 40px;
+            line-height: 40rpx;
+            color: #333;
+            font-weight: 600;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            /* background-color: blue; */
+            transform: rotateZ(0deg);
+            transition: transform 1s linear;
+        }
+
+        .close-rotate:hover {
+            transform: rotateZ(90deg);
+            transition: transform 1s linear;
+        }
+
+        .more-tips-text {
+            background-color: green;
+            color: #FFFFFF;
+            font-size: 20px;
+            padding: 10px;
+            display: none;
+            box-sizing: border-box;
+        }
+
+        @keyframes colorChange {
+            0% {
+                background-color: red;
+                transform: rotateZ(120deg);
+                top: 0;
+                left: 0;
+            }
+
+            50% {
+                background-color: green;
+                transform: rotateZ(240deg);
+                left: calc(100% - 400px);
+                top: 0;
+            }
+
+            100% {
+                background-color: red;
+                transform: rotateZ(360deg);
+                left: 0;
+                top: 0;
+            }
+        }
+
+        .color-change-div {
+            width: 100%;
+            position: relative;
+        }
+
+        .color-change {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            animation: colorChange 3s linear infinite;
+        }
+
+        .bolang-box {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #FFFFFF;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+            margin-left: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bolang-box::before {
+            position: absolute;
+            bottom: -140%;
+            left: -50%;
+            content: '';
+            width: 380px;
+            height: 380px;
+            border-radius: 36%;
+            background-color: #409EFF;
+            animation: rotate 7s linear infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <!-- 文字交融效果 -->
+        <div class="test-dh-view">
+            <view class="test-dh">This is my work</view>
+        </div>
+        <!-- 转圈圈 -->
+        <div class="cirle"></div>
+        <!-- 围着屏幕边缘跑 -->
+        <div class="run-point"></div>
+        <div class="close-rotate">转</div>
+        <div class="more-tips-text">更多菜单</div>
+        <div class="color-change-div">
+            <div class="color-change"></div>
+        </div>
+        <!-- 波浪 -->
+        <div class="bolang-box">
+
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(() => {
+        console.log(`开始执行jquery`)
+        let nowHtml = $('*')
+        let but = $('.close-rotate')
+        but.click(() => {
+            console.log(`点击事件`)
+            console.log(`myJqeury====`, $('.more-tips-text'))
+            $('.more-tips-text').slideToggle('slow')
+        })
+        but.dblclick(() => {
+            console.log(`双击`)
+        })
+        nowHtml.keydown((e) => {
+            console.log(`键盘事=====`, e)
+        })
+        $('.cirle').click(() => {
+            $('.more-tips-text').load('http://hyxyapi.huawa.com/api/lession/index', (data) => {
+                console.log(`data====`, data)
+            })
+        })
+    })
+    // console.log(`sdsd====`, localStorage.getItem('loaded'))
+    // if(!localStorage.getItem('loaded')){
+    //     reloadFuc();
+    // }else{
+    //     localStorage.setItem('loaded', false)
+    // }
+    // function reloadFuc() {
+    //     console.log(`刷新`)
+    //     setTimeout(()=>{
+    //         location.reload()
+    //     },1000)
+    //     localStorage.setItem('loaded', true)
+    // }
+</script>
+
+</html>
